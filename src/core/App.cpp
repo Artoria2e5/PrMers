@@ -311,12 +311,15 @@ App::App(int argc, char** argv)
       io::WorktodoParser wp{o.worktodo_path};
       if (auto e = wp.parse()) {
             o.exponent     = e->exponent;
-            o.mode         = e->prpTest ? "prp" : (e->llTest ? "ll" : (e->pm1Test ? "pm1" : ""));
+            o.mode         = e->testType == TESTTYPE_PRP ? "prp" :
+                             e->testType == TESTTYPE_LL  ? "ll" :
+                             e->testType == TESTTYPE_PM1 ? "pm1" : "";
             o.aid          = e->aid;
             o.knownFactors = e->knownFactors;
-            if (e->pm1Test) {
-                o.B1 = e->B1;
-                o.B2 = e->B2;
+            if (e->isWagstaff()) o.wagstaff = true;
+            if (e->testType == TESTTYPE_PM1) {
+                o.B1 = e->options.factoring.B1;
+                o.B2 = e->options.factoring.B2;
             }
             hasWorktodoEntry_ = true;
       }
