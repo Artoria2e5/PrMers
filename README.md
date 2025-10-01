@@ -132,29 +132,42 @@ Requirements
 
 Quick Start
 -----------
-Build from source
+4. Build from source
    * Linux/macOS (example):
      ```sh
-     make
+     make -j$(nproc)
      ```
-   * Windows (recommended): CMake + vcpkg + Visual Studio
+   * Windows: CMake + vcpkg + Visual Studio
      ```cmd
      cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
      cmake --build build --config Release
      ```
+   * Windows (recommended): MSYS2 MinGW-w64
+     * Install MSYS2
+     * Click open "MSYS2 MinGW 64-bit"
+      * Install dependencies:
+        ```sh
+        pacman -Syu
+        pacman -S --noconfirm make mingw-w64-x86_64-{gcc,opencl-headers,gmp,curl,opencl-icd}
+        ```
+      * Build:
+        ```sh
+        make -j$(nproc)
+        ```
 
-Run a PRP test
+
+5. Run a PRP test
    ```sh
    ./prmers 136279841
    ```
    (Default: PRP mode, Marin backend on)
 
-4. Disable Marin (use legacy internal backend)
+6. Disable Marin (use legacy internal backend)
    ```sh
    ./prmers 136279841 -marin
    ```
 
-6. P-1 stage-1 + stage-2
+7. P-1 stage-1 + stage-2
    ```sh
    ./prmers 367 -pm1 -b1 11981 -b2 38971
    ```
